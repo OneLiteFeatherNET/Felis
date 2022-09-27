@@ -1,4 +1,4 @@
-rootProject.name = "zosma" // TODO("Change me ;D")
+rootProject.name = "Felis"
 
 dependencyResolutionManagement {
     repositories {
