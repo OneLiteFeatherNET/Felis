@@ -7,6 +7,7 @@ import net.minestom.server.command.builder.condition.Conditions;
 import net.minestom.server.entity.Player;
 import net.minestom.server.potion.Potion;
 import net.minestom.server.potion.PotionEffect;
+import net.theevilreaper.felis.util.Messages;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -30,8 +31,10 @@ public class NightVisionCommand extends Command {
 
         if (!player.getActiveEffects().isEmpty()) {
             player.removeEffect(potion.effect());
+            player.sendMessage(Messages.NIGHTVISION_DISABLED);
         } else {
             player.addEffect(potion);
+            player.sendMessage(Messages.NIGHTVISION_ENABLED);
         }
     }
 }

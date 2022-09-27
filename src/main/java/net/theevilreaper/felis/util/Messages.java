@@ -14,5 +14,9 @@ public final class Messages {
     public static final Component ABORT_TELEPORT_YOURSELF =
             PREFIX.append(Component.text("Can not teleport to yourself", NamedTextColor.RED));
 
+    public static final Component NIGHTVISION_ENABLED =
+            PREFIX.append(Component.text("Enabled nightvision", NamedTextColor.AQUA));
+    public static final Component NIGHTVISION_DISABLED =
+            PREFIX.append(Component.text("Disabled nightvision", NamedTextColor.RED));
     private Messages() {}
 }
