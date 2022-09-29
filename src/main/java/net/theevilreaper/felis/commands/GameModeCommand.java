@@ -42,7 +42,7 @@ public class GameModeCommand extends Command {
         setDefaultExecutor((sender, context) -> sender.sendMessage(USAGE));
 
         //Command Syntax for /gamemode <gamemode>
-        addSyntax(this::executeSelf);
+        addSyntax(this::executeSelf, gamemode);
 
         //Command Syntax for /gamemode <gamemode> [targets]
         addSyntax((sender, context) -> {
@@ -59,7 +59,7 @@ public class GameModeCommand extends Command {
      * notifies them (and the sender) in the chat.
      */
     private void executeOthers(@NotNull CommandSender sender, @NotNull GameMode mode, @NotNull List<Entity> entities) {
-        if (entities.isEmpty()) {
+        /*if (entities.isEmpty()) {
             sender.sendMessage(PLAYER_NOT_FOUND);
         } else for (Entity entity : entities) {
             if (entity instanceof Player player) {
@@ -77,17 +77,14 @@ public class GameModeCommand extends Command {
                     sender.sendMessage(Component.translatable("commands.gamemode.success.other", playerName, gamemodeComponent), MessageType.SYSTEM);
                 }
             }
-        }
+        }*/
     }
 
     private void executeSelf(@NotNull CommandSender sender, @NotNull CommandContext context) {
         var player = (Player) sender;
 
-        if (!player.hasPermission("")) {
-            return;
-        }
+        GameMode gameMode = context.get(GAME_MODE);
 
-        var gameMode = GameMode.valueOf(context.get(GAME_MODE));
         player.setGameMode(gameMode);
         player.sendMessage(buildWithPrefix(
                 Component.text("Changed gamemode to", NamedTextColor.GRAY)
