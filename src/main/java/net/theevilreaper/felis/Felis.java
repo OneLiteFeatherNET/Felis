@@ -2,9 +2,7 @@ package net.theevilreaper.felis;
 
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.extensions.Extension;
-import net.theevilreaper.felis.commands.GameModeCommand;
-import net.theevilreaper.felis.commands.NightVisionCommand;
-import net.theevilreaper.felis.commands.SpeedCommand;
+import net.theevilreaper.felis.commands.*;
 
 /**
  * @author theEvilReaper
@@ -19,6 +17,9 @@ public class Felis extends Extension {
         commandManager.register(new GameModeCommand());
         commandManager.register(new SpeedCommand());
         commandManager.register(new NightVisionCommand());
+        commandManager.register(new FlyCommand());
+        commandManager.register(new InfoCommand());
+        commandManager.register(new StopCommand());
     }
 
     @Override
