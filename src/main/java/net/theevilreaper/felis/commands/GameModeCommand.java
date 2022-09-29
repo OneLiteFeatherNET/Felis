@@ -1,6 +1,5 @@
 package net.theevilreaper.felis.commands;
 
-import net.kyori.adventure.audience.MessageType;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.command.CommandSender;
@@ -17,7 +16,6 @@ import net.minestom.server.utils.entity.EntityFinder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.Locale;
 
 import static net.theevilreaper.felis.util.Messages.*;
 
