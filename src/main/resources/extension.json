@@ -1,5 +1,6 @@
 {
   "entrypoint": "net.theevilreaper.felis.Felis",
   "name": "Felis",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "authors": ["theEvilReaper, Joltra"]
 }
