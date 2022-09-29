@@ -15,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
  * @version 1.0.0
  * @since 1.0.0
  **/
+@SuppressWarnings("java:S3252")
 public class NightVisionCommand extends Command {
 
     private final Potion potion;
