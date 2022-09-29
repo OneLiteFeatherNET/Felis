@@ -5,6 +5,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.command.CommandSender;
 import net.minestom.server.command.builder.Command;
+import net.minestom.server.command.builder.CommandContext;
 import net.minestom.server.command.builder.arguments.ArgumentEnum;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.command.builder.arguments.minecraft.ArgumentEntity;
@@ -27,31 +28,21 @@ import static net.theevilreaper.felis.util.Messages.*;
  **/
 public class GameModeCommand extends Command {
 
+    private static final String GAME_MODE = "gamemode";
+
     private static final Component USAGE = PREFIX
             .append(Component.text("Usage: /gamemode <gm> [targets]", NamedTextColor.RED));
 
     public GameModeCommand() {
-        super("gamemode", "gm");
-
+        super(GAME_MODE, "gm");
         setCondition(Conditions::playerOnly);
-
-        ArgumentEnum<GameMode> gamemode = ArgumentType.Enum("gamemode", GameMode.class).setFormat(ArgumentEnum.Format.LOWER_CASED);
+        ArgumentEnum<GameMode> gamemode = ArgumentType.Enum(GAME_MODE, GameMode.class).setFormat(ArgumentEnum.Format.LOWER_CASED);
         ArgumentEntity playerArgument = ArgumentType.Entity("targets").onlyPlayers(true);
 
         setDefaultExecutor((sender, context) -> sender.sendMessage(USAGE));
 
         //Command Syntax for /gamemode <gamemode>
-        addSyntax((sender, context) -> {
-            //Limit execution to players only
-            if (!(sender instanceof Player player)) {
-                sender.sendMessage(NO_PLAYER);
-                return;
-            }
-            GameMode mode = context.get(gamemode);
-
-            //Set the gamemode for the sender
-            executeSelf(player, mode);
-        }, gamemode);
+        addSyntax(this::executeSelf);
 
         //Command Syntax for /gamemode <gamemode> [targets]
         addSyntax((sender, context) -> {
@@ -89,19 +80,17 @@ public class GameModeCommand extends Command {
         }
     }
 
-    /**
-     * Sets the gamemode for the executing Player, and
-     * notifies them in the chat.
-     */
-    private void executeSelf(@NotNull Player sender, @NotNull GameMode mode) {
-        sender.setGameMode(mode);
+    private void executeSelf(@NotNull CommandSender sender, @NotNull CommandContext context) {
+        var player = (Player) sender;
 
-        //The translation keys 'gameMode.survival', 'gameMode.creative', etc.
-        //correspond to the translated game mode names.
-        String gamemodeString = "gameMode." + mode.name().toLowerCase(Locale.ROOT);
-        Component gamemodeComponent = Component.translatable(gamemodeString, NamedTextColor.GREEN);
+        if (!player.hasPermission("")) {
+            return;
+        }
 
-        //Send the translated message to the player.
-        sender.sendMessage(PREFIX.append(Component.text("Changed gamemode to ", NamedTextColor.GRAY).append(gamemodeComponent)));
+        var gameMode = GameMode.valueOf(context.get(GAME_MODE));
+        player.setGameMode(gameMode);
+        player.sendMessage(buildWithPrefix(
+                Component.text("Changed gamemode to", NamedTextColor.GRAY)
+                        .append(Component.text(gameMode.name(), NamedTextColor.GREEN))));
     }
 }
