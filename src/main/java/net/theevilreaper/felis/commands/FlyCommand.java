@@ -32,7 +32,7 @@ public class FlyCommand extends Command {
             var finder = context.get(playerArgument);
             finder.setTargetSelector(EntityFinder.TargetSelector.ALL_PLAYERS);
             executeOther((Player)sender, finder.find(sender));
-        });
+        }, playerArgument);
     }
 
     private void executeOther(@NotNull Player sender, @NotNull List<Entity> players) {
@@ -71,24 +71,22 @@ public class FlyCommand extends Command {
             player.sendMessage(Messages.ABORT_FLY_COMMAND);
             return;
         }
-
         updateFlyStatus(player);
     }
 
     /**
      * Updates the fly status from a given {@link Player}.
      * @param player the player to change the status
-     * @return True if the player can now fly and false when the given player can no longer fly
      */
-    private boolean updateFlyStatus(@NotNull Player player) {
+    private void updateFlyStatus(@NotNull Player player) {
         if (player.isAllowFlying()) {
             player.setAllowFlying(false);
             player.setFlying(false);
-            return false;
+            player.sendMessage(Messages.FLY_DISABLED);
         } else {
             player.setAllowFlying(true);
             player.setFlying(true);
+            player.sendMessage(Messages.FLY_ENABLED);
         }
-        return true;
     }
 }

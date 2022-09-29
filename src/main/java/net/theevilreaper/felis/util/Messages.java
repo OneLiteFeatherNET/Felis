@@ -23,6 +23,12 @@ public final class Messages {
     public static final Component NIGHTVISION_DISABLED =
             PREFIX.append(Component.text("Disabled nightvision", NamedTextColor.RED));
 
+    public static final Component FLY_ENABLED =
+            buildWithPrefix(Component.text("You can fly now"));
+
+    public static final Component FLY_DISABLED =
+            buildWithPrefix(Component.text("You can't fly anymore"));
+
     public static final Component NO_PERMISSION =
             buildWithPrefix(Component.text("You can not execute this command!", NamedTextColor.RED));
     private Messages() {}
