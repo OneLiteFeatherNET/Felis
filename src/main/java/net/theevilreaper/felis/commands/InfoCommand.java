@@ -20,22 +20,35 @@ public class InfoCommand extends Command {
 
     public InfoCommand() {
         super("info", "extension", "plugins", "pl");
+        this.addSyntax(this::onExecute);
     }
 
     private void onExecute(@NotNull CommandSender sender, @NotNull CommandContext context) {
-        var extensionManager = MinecraftServer.getExtensionManager();
+        var extensions = MinecraftServer.getExtensionManager().getExtensions();
         var message = Component.text()
                 .append(Component.text("This server is running ", NamedTextColor.GRAY))
-                        .append(Component.text("Minestom" + MinecraftServer.getBrandName(), NamedTextColor.GOLD, TextDecoration.UNDERLINED)
+                        .append(Component.text("Minestom 1.19.2", NamedTextColor.GOLD, TextDecoration.UNDERLINED)
                                 .hoverEvent(HoverEvent.showText(Component.text(MINESTOM_GITHUB, NamedTextColor.GRAY)))
-                                .clickEvent(ClickEvent.openUrl(MINESTOM_GITHUB))
-                .append(Component.text("\n\n  → " +  extensionManager.getExtensions().size() + "extensions:\n", NamedTextColor.LIGHT_PURPLE)));
+                                .clickEvent(ClickEvent.openUrl(MINESTOM_GITHUB)))
+                .append(Component.newline())
+                .append(Component.newline())
+                .append(Component.text("Loaded ", NamedTextColor.GRAY))
+                .append(Component.text(extensions.size(), NamedTextColor.GOLD))
+                .append(Component.text(" Extension from the folder", NamedTextColor.GRAY))
+                .append(Component.newline());
 
-        if (!extensionManager.getExtensions().isEmpty()) {
+        if (!extensions.isEmpty()) {
             int counter = 0;
 
-            for (Extension extension : extensionManager.getExtensions()) {
+            for (Extension extension : extensions) {
                 var originExtension = extension.getOrigin();
+                var authorComponents = Component.empty();
+
+                if (originExtension.getAuthors().length != 0) {
+                    authorComponents =  Component.newline().append(Component.text("Authors: ", NamedTextColor.GRAY)
+                            .append(Component.text(Arrays.toString(originExtension.getAuthors()), NamedTextColor.GREEN)));
+                }
+
                 message.append(Component.text(originExtension.getName(), NamedTextColor.GREEN)
                         .hoverEvent(HoverEvent.showText(
                                 Component.text()
@@ -43,11 +56,13 @@ public class InfoCommand extends Command {
                                         .append(Component.text(originExtension.getName(), NamedTextColor.GREEN))
                                         .append(Component.text("\nVersion: ", NamedTextColor.GRAY))
                                         .append(Component.text(originExtension.getVersion(), NamedTextColor.GREEN))
+                                        .append(authorComponents)
                         )));
-                if (originExtension.getAuthors().length != 0) {
-                    message.append(Component.text("\nAuthors", NamedTextColor.GRAY));
-                    message.append(Component.text(Arrays.toString(originExtension.getAuthors()), NamedTextColor.GRAY));
+                counter++;
+                if (counter <= extensions.size() -1) {
+                    message.append(Component.text(", "));
                 }
+
             }
         }
 
