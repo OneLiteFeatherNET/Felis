@@ -4,12 +4,14 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.command.CommandSender;
-import net.minestom.server.command.ConsoleSender;
 import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.CommandContext;
 import net.minestom.server.entity.Player;
 import net.theevilreaper.felis.util.Messages;
 import org.jetbrains.annotations.NotNull;
+
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 
 public class StopCommand extends Command {
 
@@ -18,13 +20,6 @@ public class StopCommand extends Command {
     public StopCommand() {
         super("stop");
         this.addSyntax(this::onExecute);
-        MinecraftServer.getSchedulerManager().buildShutdownTask(() -> {
-            var onlinePlayers = MinecraftServer.getConnectionManager().getOnlinePlayers();
-
-            if (onlinePlayers.isEmpty()) return;
-
-            onlinePlayers.forEach(player -> player.kick(SHUTDOWN));
-        });
     }
 
     private void onExecute(@NotNull CommandSender sender, @NotNull CommandContext context) {
@@ -32,7 +27,13 @@ public class StopCommand extends Command {
             sender.sendMessage(Messages.NO_PERMISSION);
             return;
         }
-        MinecraftServer.stopCleanly();
+        var onlinePlayers = MinecraftServer.getConnectionManager().getOnlinePlayers();
+        if (onlinePlayers.isEmpty()) return;
+        onlinePlayers.forEach(player -> {
+            player.kick(SHUTDOWN);
+            MinecraftServer.getConnectionManager().removePlayer(player.getPlayerConnection());
+        });
+        MinecraftServer.getSchedulerManager().buildTask(MinecraftServer::stopCleanly).delay(Duration.of(1_000, ChronoUnit.MILLIS)).schedule();
     }
 
 }
