@@ -2,6 +2,7 @@ package net.theevilreaper.felis.util;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 public final class Messages {
@@ -31,9 +32,17 @@ public final class Messages {
 
     public static final Component NO_PERMISSION =
             buildWithPrefix(Component.text("You can not execute this command!", NamedTextColor.RED));
+
+    public static final Component SHOW_DEBUGS =
+            buildWithPrefix(Component.text("Press tab to see some debug information", NamedTextColor.RED));
+
+    public static final Component NO_DEBUGS =
+            buildWithPrefix(Component.text("Removed", NamedTextColor.RED));
+
     private Messages() {}
 
-    public static Component buildWithPrefix(@NotNull Component component) {
+    @Contract(pure = true)
+    public static @NotNull Component buildWithPrefix(@NotNull Component component) {
         return PREFIX.append(component);
     }
 }
