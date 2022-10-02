@@ -10,6 +10,7 @@ import net.minestom.server.command.CommandSender;
 import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.CommandContext;
 import net.minestom.server.extensions.Extension;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -25,11 +26,7 @@ public class InfoCommand extends Command {
 
     private void onExecute(@NotNull CommandSender sender, @NotNull CommandContext context) {
         var extensions = MinecraftServer.getExtensionManager().getExtensions();
-        var message = Component.text()
-                .append(Component.text("This server is running ", NamedTextColor.GRAY))
-                        .append(Component.text("Minestom 1.19.2", NamedTextColor.GOLD, TextDecoration.UNDERLINED)
-                                .hoverEvent(HoverEvent.showText(Component.text(MINESTOM_GITHUB, NamedTextColor.GRAY)))
-                                .clickEvent(ClickEvent.openUrl(MINESTOM_GITHUB)))
+        var message = Component.text().append(buildMinestomComponent())
                 .append(Component.newline())
                 .append(Component.newline())
                 .append(Component.text("Loaded ", NamedTextColor.GRAY))
@@ -51,8 +48,7 @@ public class InfoCommand extends Command {
 
                 message.append(Component.text(originExtension.getName(), NamedTextColor.GREEN)
                         .hoverEvent(HoverEvent.showText(
-                                Component.text()
-                                        .append(Component.text("Name: ", NamedTextColor.GRAY))
+                                Component.text("Name: ", NamedTextColor.GRAY)
                                         .append(Component.text(originExtension.getName(), NamedTextColor.GREEN))
                                         .append(Component.text("\nVersion: ", NamedTextColor.GRAY))
                                         .append(Component.text(originExtension.getVersion(), NamedTextColor.GREEN))
@@ -62,10 +58,16 @@ public class InfoCommand extends Command {
                 if (counter <= extensions.size() -1) {
                     message.append(Component.text(", "));
                 }
-
             }
         }
-
         sender.sendMessage(message);
+    }
+
+    @Contract(pure = true)
+    private @NotNull Component buildMinestomComponent() {
+        return Component.text("This server is running ", NamedTextColor.GRAY)
+                .append(Component.text("Minestom " + MinecraftServer.VERSION_NAME, NamedTextColor.GOLD, TextDecoration.UNDERLINED)
+                        .hoverEvent(HoverEvent.showText(Component.text(MINESTOM_GITHUB, NamedTextColor.GRAY)))
+                        .clickEvent(ClickEvent.openUrl(MINESTOM_GITHUB)));
     }
 }
