@@ -1,17 +1,21 @@
 plugins {
     java
     jacoco
-    alias(libs.plugins.sonar)
 }
 
-group = "org.example" // TODO: Change me
-val baseVersion = "0.0.1-SNAPSHOT" // TODO: Change me
-val sonarKey = "dungeon_zosma_AYRjIidNwVDHzVoeOyqG" // TODO: Change me
+group = "net.theevilreaper.felis"
+val baseVersion = "1.0.0-SNAPSHOT"
+val sonarKey = "insert-sonar-key"
 
 java {
-   toolchain {
-         languageVersion.set(JavaLanguageVersion.of(21))
-   }
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven("https://jitpack.io")
 }
 
 dependencies {
@@ -43,18 +47,6 @@ tasks {
         testLogging {
             events("passed", "skipped", "failed")
         }
-    }
-
-    getByName("sonar") {
-        dependsOn(rootProject.tasks.test)
-    }
-}
-
-sonarqube {
-    properties {
-        property("sonar.projectKey", "dungeon_zosma_AYm_wAIFq35l90nqW9Qs")
-        property("sonar.projectName", "Zosma")
-        property("sonar.qualitygate.wait", true)
     }
 }
 
