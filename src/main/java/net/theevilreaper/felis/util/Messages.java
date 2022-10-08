@@ -2,13 +2,16 @@ package net.theevilreaper.felis.util;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 public final class Messages {
 
+    public static final TextColor PREFIX_COLOR = TextColor.fromHexString("#B0FC38");
+
     public static final Component PREFIX =
-            Component.text("Felis >", NamedTextColor.GRAY);
+            Component.text("Felis").color(PREFIX_COLOR).append(Component.text(" » ", NamedTextColor.GRAY));
     public static final Component PLAYER_NOT_FOUND =
             PREFIX.append(Component.text("The specific player is not online!", NamedTextColor.RED));
     public static final Component NO_PLAYER =
