@@ -1,10 +1,10 @@
 package net.theevilreaper.felis.commands;
 
+import net.kyori.adventure.audience.MessageType;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.command.CommandSender;
 import net.minestom.server.command.builder.Command;
-import net.minestom.server.command.builder.CommandContext;
 import net.minestom.server.command.builder.arguments.ArgumentEnum;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.command.builder.arguments.minecraft.ArgumentEntity;
@@ -16,6 +16,7 @@ import net.minestom.server.utils.entity.EntityFinder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Locale;
 
 import static net.theevilreaper.felis.util.Messages.*;
 
@@ -40,10 +41,20 @@ public class GameModeCommand extends Command {
         setDefaultExecutor((sender, context) -> sender.sendMessage(USAGE));
 
         //Command Syntax for /gamemode <gamemode>
-        addSyntax(this::executeSelf, gamemode);
+        addSyntax((sender, context) -> {
+            GameMode gameMode = context.get(gamemode);
+            executeSelf(sender, gameMode);
+        }, gamemode);
 
         //Command Syntax for /gamemode <gamemode> [targets]
         addSyntax((sender, context) -> {
+            //Check permission for players only
+            //This allows the console to use this syntax too
+            /*if (sender instanceof Player p && p.getPermissionLevel() < 2) {
+                sender.sendMessage(Component.text("You don't have permission to use this command.", NamedTextColor.RED));
+                return;
+            }*/
+
             EntityFinder finder = context.get(playerArgument);
             GameMode mode = context.get(gamemode);
 
@@ -57,12 +68,12 @@ public class GameModeCommand extends Command {
      * notifies them (and the sender) in the chat.
      */
     private void executeOthers(@NotNull CommandSender sender, @NotNull GameMode mode, @NotNull List<Entity> entities) {
-        /*if (entities.isEmpty()) {
+        if (entities.isEmpty()) {
             sender.sendMessage(PLAYER_NOT_FOUND);
         } else for (Entity entity : entities) {
             if (entity instanceof Player player) {
                 if (player == sender) {
-                    executeSelf((Player) sender, mode);
+                    executeSelf(sender, mode);
                 } else {
                     player.setGameMode(mode);
 
@@ -75,17 +86,15 @@ public class GameModeCommand extends Command {
                     sender.sendMessage(Component.translatable("commands.gamemode.success.other", playerName, gamemodeComponent), MessageType.SYSTEM);
                 }
             }
-        }*/
+        }
     }
 
-    private void executeSelf(@NotNull CommandSender sender, @NotNull CommandContext context) {
+    private void executeSelf(@NotNull CommandSender sender, @NotNull GameMode mode) {
         var player = (Player) sender;
 
-        GameMode gameMode = context.get(GAME_MODE);
-
-        player.setGameMode(gameMode);
+        player.setGameMode(mode);
         player.sendMessage(buildWithPrefix(
-                Component.text("Changed gamemode to", NamedTextColor.GRAY)
-                        .append(Component.text(gameMode.name(), NamedTextColor.GREEN))));
+                Component.text("Changed gamemode to ", NamedTextColor.GRAY)
+                        .append(Component.text(mode.name(), PREFIX_COLOR))));
     }
 }

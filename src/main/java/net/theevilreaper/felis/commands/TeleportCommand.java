@@ -3,11 +3,15 @@ package net.theevilreaper.felis.commands;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.command.CommandSender;
 import net.minestom.server.command.builder.Command;
-import net.minestom.server.command.builder.CommandContext;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.command.builder.condition.Conditions;
+import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.Player;
+import net.minestom.server.utils.entity.EntityFinder;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 import static net.theevilreaper.felis.util.Messages.*;
 
@@ -23,36 +27,39 @@ public class TeleportCommand extends Command {
         super("teleport", "tp");
         this.setCondition(Conditions::playerOnly);
 
-        var playerArgument = ArgumentType.Word("player");
+        var playerArgument = ArgumentType.Entity("player").onlyPlayers(true);
 
-        this.addSyntax(this::onExecuteSelf, playerArgument);
+        addSyntax((sender, context) -> {
+            var finder = context.get(playerArgument);
+            finder.setTargetSelector(EntityFinder.TargetSelector.MINESTOM_USERNAME);
+            this.onExecuteSelf(sender, finder.find(sender));
+        }, playerArgument);
     }
 
     /**
      * Handles the execution of the command for a player argument.
      * @param sender the involved sender
-     * @param context the context from the command
      */
-    private void onExecuteSelf(@NotNull CommandSender sender, @NotNull CommandContext context) {
+    private void onExecuteSelf(@NotNull CommandSender sender, @Nullable List<Entity> targets) {
         var player = (Player) sender;
-        String playerAsString = context.get("player");
-        var targetPlayer = MinecraftServer.getConnectionManager().getPlayer(playerAsString);
 
-        if (targetPlayer == null) {
+        if (targets == null || targets.isEmpty()) {
             player.sendMessage(PLAYER_NOT_FOUND);
             return;
         }
 
+        var target = targets.get(0);
+
         //Abort teleport to yourself
-        if (player.getUuid().equals(targetPlayer.getUuid())) {
+        if (player.getUuid().equals(target.getUuid())) {
             player.sendMessage(ABORT_TELEPORT_YOURSELF);
             return;
         }
 
-        if (!player.getInstance().getUniqueId().equals(targetPlayer.getInstance().getUniqueId())) {
-            player.setInstance(targetPlayer.getInstance(), targetPlayer.getPosition());
+        if (!player.getInstance().getUniqueId().equals(target.getInstance().getUniqueId())) {
+            player.setInstance(target.getInstance(), target.getPosition());
         } else {
-            player.teleport(targetPlayer.getPosition());
+            player.teleport(target.getPosition());
         }
     }
 }
