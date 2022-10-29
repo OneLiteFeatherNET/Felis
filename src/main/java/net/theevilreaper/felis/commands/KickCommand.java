@@ -19,6 +19,8 @@ public class KickCommand extends Command {
     private static final Component DEFAULT_KICK_MESSAGE =
             Component.text("You have been kicked from the server", NamedTextColor.RED);
 
+    private static final String KICK_BYPASS = "felis.commands.kick.bypass";
+
     //Syntax: /kick <player> <reason>
     public KickCommand() {
         super("kick", "k");
@@ -41,7 +43,7 @@ public class KickCommand extends Command {
         }
 
         for (Entity target : targets) {
-            if (target.getUuid().equals(sender.getUuid()) || target.hasPermission("")) continue;
+            if (target.getUuid().equals(sender.getUuid()) || target.hasPermission(KICK_BYPASS)) continue;
             ((Player) target).kick(kickComponent);
         }
     }

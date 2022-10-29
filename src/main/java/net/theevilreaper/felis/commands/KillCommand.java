@@ -13,6 +13,8 @@ import java.util.List;
 
 public class KillCommand extends Command {
 
+    private static final String KILL_PERMISSION = "felis.command.kill";
+
     public KillCommand() {
         super("kill");
         this.setCondition(Conditions::playerOnly);
@@ -26,7 +28,7 @@ public class KillCommand extends Command {
     }
 
     private void execute(@NotNull Player player, @NotNull List<Entity> entities) {
-        if (!player.hasPermission("")) {
+        if (!player.hasPermission(KILL_PERMISSION)) {
             player.sendMessage(Messages.NO_PERMISSION);
             return;
         }
