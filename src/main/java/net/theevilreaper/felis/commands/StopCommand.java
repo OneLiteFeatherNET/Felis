@@ -16,6 +16,8 @@ import java.time.temporal.ChronoUnit;
 public class StopCommand extends Command {
 
     private static final Component SHUTDOWN = Component.text("Server shutdowns", NamedTextColor.RED);
+    private static final long DELAY_TIME = 1_000;
+    private static final String STOP_PERMISSION = "felis.command.stop";
 
     public StopCommand() {
         super("stop");
@@ -23,7 +25,7 @@ public class StopCommand extends Command {
     }
 
     private void onExecute(@NotNull CommandSender sender, @NotNull CommandContext context) {
-        if (sender instanceof Player player && !player.hasPermission("test")) {
+        if (sender instanceof Player player && !player.hasPermission(STOP_PERMISSION)) {
             sender.sendMessage(Messages.NO_PERMISSION);
             return;
         }
@@ -33,7 +35,7 @@ public class StopCommand extends Command {
             player.kick(SHUTDOWN);
             MinecraftServer.getConnectionManager().removePlayer(player.getPlayerConnection());
         });
-        MinecraftServer.getSchedulerManager().buildTask(MinecraftServer::stopCleanly).delay(Duration.of(1_000, ChronoUnit.MILLIS)).schedule();
+        MinecraftServer.getSchedulerManager().buildTask(MinecraftServer::stopCleanly).delay(Duration.of(DELAY_TIME, ChronoUnit.MILLIS)).schedule();
     }
 
 }
