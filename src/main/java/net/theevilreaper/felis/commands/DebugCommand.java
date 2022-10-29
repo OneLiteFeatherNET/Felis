@@ -17,18 +17,21 @@ import net.minestom.server.utils.time.TimeUnit;
 import net.theevilreaper.felis.util.Messages;
 import org.jetbrains.annotations.NotNull;
 
+import java.time.Duration;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class DebugCommand extends Command {
 
+    private static final int DIGITS = 2;
     private static final AtomicReference<TickMonitor> LAST_TICK = new AtomicReference<>();
     private final EventNode<Event> debugNode;
     private final Set<Player> viewers;
 
     public DebugCommand() {
-        super("debug", "d");
+        super("adebug");
+        MinecraftServer.getBenchmarkManager().enable(Duration.ofMinutes(5));
         this.debugNode = EventNode.all("debugNode");
         this.viewers = new HashSet<>();
         this.addSyntax(this::executeCommand);
@@ -39,11 +42,6 @@ public class DebugCommand extends Command {
     private void executeCommand(@NotNull CommandSender sender, @NotNull CommandContext context) {
         var player = (Player) sender;
 
-        if (!player.hasPermission("")) {
-            player.sendMessage(Messages.NO_PERMISSION);
-            return;
-        }
-
         if (this.viewers.add(player)) {
             player.sendMessage(Messages.SHOW_DEBUGS);
         } else {
@@ -51,6 +49,10 @@ public class DebugCommand extends Command {
             player.sendMessage(Messages.NO_DEBUGS);
             player.sendPlayerListHeaderAndFooter(Component.empty(), Component.empty());
         }
+    }
+
+    public void unregisterNode() {
+        MinecraftServer.getGlobalEventHandler().removeChild(this.debugNode);
     }
 
     private void initListener(@NotNull EventNode<Event> eventNode) {
@@ -67,9 +69,9 @@ public class DebugCommand extends Command {
             TickMonitor tickMonitor = LAST_TICK.get();
             final Component header = Component.text("RAM USAGE: " + ramUsage + " MB")
                     .append(Component.newline())
-                    .append(Component.text("TICK TIME: " + MathUtils.round(tickMonitor.getTickTime(), 2) + "ms"))
+                    .append(Component.text("TICK TIME: " + MathUtils.round(tickMonitor.getTickTime(), DIGITS) + "ms"))
                     .append(Component.newline())
-                    .append(Component.text("ACQ TIME: " + MathUtils.round(tickMonitor.getAcquisitionTime(), 2) + "ms"));
+                    .append(Component.text("ACQ TIME: " + MathUtils.round(tickMonitor.getAcquisitionTime(), DIGITS) + "ms"));
             final Component footer = benchmarkManager.getCpuMonitoringMessage();
             sendMessage(header, footer);
         }).repeat(10, TimeUnit.SERVER_TICK).schedule();
