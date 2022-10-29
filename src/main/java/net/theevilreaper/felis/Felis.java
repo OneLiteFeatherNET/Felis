@@ -11,19 +11,27 @@ import net.theevilreaper.felis.commands.*;
  **/
 public class Felis extends Extension {
 
+    private DebugCommand debugCommand;
+
     @Override
     public void initialize() {
         var commandManager = MinecraftServer.getCommandManager();
-        commandManager.register(new GameModeCommand());
-        commandManager.register(new SpeedCommand());
-        commandManager.register(new NightVisionCommand());
+        debugCommand = new DebugCommand();
+        commandManager.register(this.debugCommand);
         commandManager.register(new FlyCommand());
+        commandManager.register(new GameModeCommand());
         commandManager.register(new InfoCommand());
+        commandManager.register(new SpeedCommand());
+        commandManager.register(new KickCommand());
+        commandManager.register(new KillCommand());
+        commandManager.register(new NightVisionCommand());
+        commandManager.register(new SpeedCommand());
         commandManager.register(new StopCommand());
+        commandManager.register(new TeleportCommand());
     }
 
     @Override
     public void terminate() {
-        // Nothing to do here
+        debugCommand.unregisterNode();
     }
 }
