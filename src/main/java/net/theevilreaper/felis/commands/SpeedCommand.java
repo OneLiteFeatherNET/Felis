@@ -1,7 +1,6 @@
 package net.theevilreaper.felis.commands;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.attribute.Attribute;
 import net.minestom.server.command.CommandSender;
 import net.minestom.server.command.builder.Command;
@@ -12,6 +11,9 @@ import net.minestom.server.entity.Player;
 import net.theevilreaper.felis.util.Messages;
 import org.jetbrains.annotations.NotNull;
 
+import static net.theevilreaper.felis.util.Messages.RESET_TO_DEFAULT;
+import static net.theevilreaper.felis.util.Messages.VALUE_IS_TO_HIGH;
+
 /**
  * The {@link SpeedCommand} allows player to change his flying or movement speed.
  * The command changes accordingly if the player flies or not the corresponding variable for the speed
@@ -21,10 +23,6 @@ import org.jetbrains.annotations.NotNull;
  **/
 public class SpeedCommand extends Command {
 
-    private static final Component VALUE_IS_TO_HIGH =
-            Messages.PREFIX.append(Component.text("The given speed is to high. The maximum is 10", NamedTextColor.RED));
-    private static final Component RESET_TO_DEFAULT =
-            Messages.PREFIX.append(Component.text("Speed has been reset to default", NamedTextColor.GREEN));
     private static final float DEFAULT_SPEED = 0.1f;
     private static final float DEFAULT_FLY_SPEED = 0.05f;
     private static final String COMMAND_NAME = "speed";
@@ -67,7 +65,7 @@ public class SpeedCommand extends Command {
 
         playerSpeed = playerSpeed / 10;
         updateInternalSpeedValue(player, playerSpeed);
-        player.sendMessage(Messages.PREFIX.append(Component.text("Changed speed value")));
+        player.sendMessage(Messages.FLY_SPEED_CHANGE.append(Component.text(playerSpeed, Messages.PREFIX_COLOR)));
     }
 
     /**
