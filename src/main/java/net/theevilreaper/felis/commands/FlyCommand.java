@@ -22,6 +22,8 @@ import java.util.List;
  */
 public class FlyCommand extends Command {
 
+    private static final String FLY_OTHER_PERMISSION = "felis.command.fly.other";
+
     public FlyCommand() {
         super("fly");
         this.setCondition(Conditions::playerOnly);
@@ -36,12 +38,10 @@ public class FlyCommand extends Command {
     }
 
     private void executeOther(@NotNull Player sender, @NotNull List<Entity> players) {
-        if (!sender.hasPermission("fly.other")) {
+        if (players.isEmpty()) return;
+
+        if (!sender.hasPermission(FLY_OTHER_PERMISSION)) {
             sender.sendMessage(Messages.NO_PERMISSION);
-            return;
-        }
-        if (players.isEmpty()) {
-            sender.sendMessage("NOPE");
             return;
         }
 
@@ -65,7 +65,6 @@ public class FlyCommand extends Command {
      */
     private void onExecuteSelf(@NotNull CommandSender sender, @NotNull CommandContext context) {
         var player = (Player) sender;
-
         //Abort the execution of the command when the involved player is in creative mode
         if (player.getGameMode() == GameMode.CREATIVE) {
             player.sendMessage(Messages.ABORT_FLY_COMMAND);
