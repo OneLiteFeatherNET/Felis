@@ -33,6 +33,14 @@ public final class Messages {
     public static final Component FLY_DISABLED =
             buildWithPrefix(Component.text("You can't fly anymore"));
 
+    public static final Component FLY_SPEED_CHANGE =
+            buildWithPrefix(Component.text("Changed speed value to", NamedTextColor.GRAY));
+
+    public static final Component VALUE_IS_TO_HIGH =
+            buildWithPrefix(Component.text("The given speed is to high. The maximum is 10", NamedTextColor.RED));
+    public static final Component RESET_TO_DEFAULT =
+            buildWithPrefix(Component.text("Speed has been reset to default", NamedTextColor.GREEN));
+
     public static final Component NO_PERMISSION =
             buildWithPrefix(Component.text("You can not execute this command!", NamedTextColor.RED));
 
