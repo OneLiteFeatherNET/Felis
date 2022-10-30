@@ -31,7 +31,7 @@ public class KillCommand extends Command {
     }
 
     private void executeSelf(@NotNull Player player) {
-        if (player.hasPermission(KILL_PERMISSION)) {
+        if (!player.hasPermission(KILL_PERMISSION)) {
             player.sendMessage(Messages.NO_PERMISSION);
             return;
         }
