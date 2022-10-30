@@ -24,6 +24,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class DebugCommand extends Command {
 
+    private static final String DEBUG_PERMISSION = "felis.command.debug";
     private static final int DIGITS = 2;
     private static final AtomicReference<TickMonitor> LAST_TICK = new AtomicReference<>();
     private final EventNode<Event> debugNode;
@@ -41,6 +42,11 @@ public class DebugCommand extends Command {
 
     private void executeCommand(@NotNull CommandSender sender, @NotNull CommandContext context) {
         var player = (Player) sender;
+
+        if (!player.hasPermission(DEBUG_PERMISSION)) {
+            player.sendMessage(Messages.NO_PERMISSION);
+            return;
+        }
 
         if (this.viewers.add(player)) {
             player.sendMessage(Messages.SHOW_DEBUGS);
