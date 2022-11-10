@@ -6,7 +6,7 @@ plugins {
 
 group = "org.example" // TODO: Change me
 val baseVersion = "0.0.1-SNAPSHOT" // TODO: Change me
-val sonarKey = "insert-sonar-key" // TODO: Change me
+val sonarKey = "dungeon_zosma_AYRjIidNwVDHzVoeOyqG" // TODO: Change me
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -55,6 +55,7 @@ tasks {
 sonarqube {
     properties {
         property("sonar.projectKey", sonarKey)
+        property("sonar.qualitygate.wait", true)
     }
 }
 
