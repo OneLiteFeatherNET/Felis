@@ -6,7 +6,7 @@ sentry = "6.6.0"
 # Plugins
 shadow = "7.1.2"
 # Chat
-adventure = "4.11.0"
+adventure = "4.12.0"
 # Testing
 junit = "5.9.1"
 mockito = "4.10.0"
