@@ -8,7 +8,7 @@ shadow = "7.1.2"
 # Chat
 adventure = "4.12.0"
 # Testing
-junit = "5.9.1"
+junit = "5.9.2"
 mockito = "4.10.0"
 # Quality Check
 sonarqube = "3.5.0.2730"
