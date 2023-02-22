@@ -47,7 +47,7 @@ tasks {
         }
     }
 
-    getByName("sonarqube") {
+    getByName("sonar") {
         dependsOn(rootProject.tasks.test)
     }
 }
