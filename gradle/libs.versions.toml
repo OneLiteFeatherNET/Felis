@@ -2,14 +2,14 @@ metadata.format.version = "1.1"
 
 [versions]
 # Error Tracking
-sentry = "6.6.0"
+sentry = "6.14.0"
 # Plugins
 shadow = "7.1.2"
 # Chat
-adventure = "4.13.0"
+adventure = "4.13.1"
 # Testing
-junit = "5.9.1"
-mockito = "4.11.0"
+junit = "5.9.3"
+mockito = "5.2.0"
 # Quality Check
 sonarqube = "4.0.0.2929"
 # Minestom
