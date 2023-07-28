@@ -22,6 +22,7 @@ dependencies {
     compileOnly(libs.minestom)
 
     testImplementation(libs.minestom)
+    testImplementation(libs.minestomTesting)
     testImplementation(libs.junitApi)
     testRuntimeOnly(libs.junitEngine)
 }

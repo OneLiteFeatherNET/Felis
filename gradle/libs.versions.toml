@@ -13,12 +13,13 @@ mockito = "5.4.0"
 # Quality Check
 sonarqube = "4.0.0.2929"
 # Minestom
-minestom = "master-SNAPSHOT"
+minestom = "1.1.0"
 
 [libraries]
 
 # Minestom
-minestom = { group = "com.github.Minestom", name = "Minestom", version.ref = "minestom"}
+minestom = { group = "net.onelitefeather.microtus", name = "Minestom", version.ref = "minestom" }
+minestomTesting = { group = "net.onelitefeather.microtus.testing", name = "testing", version.ref = "minestom" }
 # Chat
 adventureMinimessage = { group = "net.kyori", name = "adventure-text-minimessage", version.ref = "adventure" }
 # Error Tracking
