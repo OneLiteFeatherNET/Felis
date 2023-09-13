@@ -1,11 +1,12 @@
 plugins {
     java
-    id ("org.sonarqube") version "4.2.1.3168"
     jacoco
+    alias(libs.plugins.sonar)
 }
 
 group = "org.example" // TODO: Change me
 val baseVersion = "0.0.1-SNAPSHOT" // TODO: Change me
+val sonarKey = "dungeon_zosma_AYRjIidNwVDHzVoeOyqG" // TODO: Change me
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -19,11 +20,10 @@ repositories {
 
 dependencies {
     compileOnly(libs.minestom)
-
+    testImplementation(libs.minestom.test)
     testImplementation(libs.minestom)
-    testImplementation(libs.minestomTesting)
-    testImplementation(libs.junitApi)
-    testRuntimeOnly(libs.junitEngine)
+    testImplementation(libs.junit.api)
+    testRuntimeOnly(libs.junit.engine)
 }
 
 tasks {
@@ -60,8 +60,8 @@ sonarqube {
     }
 }
 
-if (System.getenv().containsKey("CI")) {
-    version = "${baseVersion}+${System.getenv("CI_COMMIT_SHORT_SHA")}"
+version = if (System.getenv().containsKey("CI")) {
+    "${baseVersion}+${System.getenv("CI_COMMIT_SHORT_SHA")}"
 } else {
-    version = baseVersion
+    baseVersion
 }
