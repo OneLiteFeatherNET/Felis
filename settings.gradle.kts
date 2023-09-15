@@ -1,4 +1,4 @@
-rootProject.name = "Felis"
+rootProject.name = "zosma"
 
 dependencyResolutionManagement {
     repositories {
