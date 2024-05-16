@@ -2,6 +2,6 @@ include:
   - project: onelitefeather/ci-template
     ref: Better-Pipelines
     file: base.yaml
-  - project: onelitefeather/ci-template
-    ref: Better-Pipelines
-    file: sonarqube.yaml
+ # - project: onelitefeather/ci-template
+ #   ref: Better-Pipelines
+ #   file: sonarqube.yaml
