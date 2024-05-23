@@ -9,17 +9,15 @@ val baseVersion = "0.0.1-SNAPSHOT" // TODO: Change me
 val sonarKey = "dungeon_zosma_AYRjIidNwVDHzVoeOyqG" // TODO: Change me
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-}
-
-repositories {
-    mavenCentral()
-    maven("https://jitpack.io")
+   toolchain {
+         languageVersion.set(JavaLanguageVersion.of(21))
+   }
 }
 
 dependencies {
+    implementation(platform(libs.dungeon.base.bom))
     compileOnly(libs.minestom)
+    testImplementation(platform(libs.dungeon.base.bom))
     testImplementation(libs.minestom.test)
     testImplementation(libs.minestom)
     testImplementation(libs.junit.api)
@@ -29,7 +27,7 @@ dependencies {
 tasks {
     compileJava {
         options.encoding = "UTF-8"
-        options.release.set(17)
+        options.release.set(21)
     }
 
     jacocoTestReport {
