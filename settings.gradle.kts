@@ -2,8 +2,6 @@ rootProject.name = "felis"
 
 dependencyResolutionManagement {
     repositories {
-        mavenCentral()
-        maven("https://jitpack.io")
         maven {
             val groupdId = 28 // Gitlab Group
             url = if (System.getenv().containsKey("CI")) {
@@ -30,6 +28,8 @@ dependencyResolutionManagement {
                 create<HttpHeaderAuthentication>("header")
             }
         }
+        mavenCentral()
+        maven("https://jitpack.io")
     }
     if (System.getenv("CI") != null) {
         repositoriesMode = RepositoriesMode.PREFER_SETTINGS
@@ -53,8 +53,8 @@ dependencyResolutionManagement {
     versionCatalogs {
         create("libs") {
             library("dungeon.base.bom", "net.theevilreaper.dungeon.bom", "base").version("1.0.0")
-            library("minestom", "net.onelitefeather.microtus", "Minestom").withoutVersion()
-            library("minestom-test", "net.onelitefeather.microtus.testing", "testing").withoutVersion()
+            library("minestom", "net.onelitefeather.microtus", "Microtus").version("1.4.1")
+            library("minestom-test", "net.onelitefeather.microtus.testing", "testing").version("1.4.1")
             library("adventure.minimessage", "net.kyori", "adventure-text-minimessage").withoutVersion()
             library("junit.api", "org.junit.jupiter", "junit-jupiter-api").withoutVersion()
             library("junit.engine", "org.junit.jupiter", "junit-jupiter-engine").withoutVersion()

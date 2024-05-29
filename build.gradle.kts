@@ -16,6 +16,19 @@ java {
 repositories {
     mavenCentral()
     maven("https://jitpack.io")
+    maven {
+        val groupdId = 28 // Gitlab Group
+        url = uri("https://gitlab.themeinerlp.dev/api/v4/groups/$groupdId/-/packages/maven")
+        name = "GitLab"
+        credentials(HttpHeaderCredentials::class.java) {
+            name =  "Private-Token"
+            value = providers.gradleProperty("gitLabPrivateToken").getOrElse("")
+        }
+        authentication {
+            create<HttpHeaderAuthentication>("header")
+        }
+    }
+
 }
 
 dependencies {

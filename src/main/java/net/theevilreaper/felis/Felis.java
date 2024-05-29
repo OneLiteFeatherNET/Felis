@@ -2,7 +2,7 @@ package net.theevilreaper.felis;
 
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.event.player.PlayerLoginEvent;
+import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.minestom.server.extensions.Extension;
 import net.theevilreaper.felis.commands.*;
@@ -35,7 +35,7 @@ public class Felis extends Extension {
         MinecraftServer.getInstanceManager().registerInstance(instance);
 
         MinecraftServer.getGlobalEventHandler().addListener(
-                PlayerLoginEvent.class, playerLoginEvent -> playerLoginEvent.setSpawningInstance(instance)
+                AsyncPlayerConfigurationEvent.class, playerLoginEvent -> playerLoginEvent.setSpawningInstance(instance)
         );
 
         var pos = new Pos(0, 100, 0);
