@@ -1,9 +1,7 @@
 package net.theevilreaper.felis;
 
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.coordinate.Pos;
-import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
-import net.minestom.server.event.player.PlayerSpawnEvent;
+import net.minestom.server.command.CommandManager;
 import net.minestom.server.extensions.Extension;
 import net.theevilreaper.felis.commands.*;
 
@@ -18,7 +16,7 @@ public class Felis extends Extension {
 
     @Override
     public void initialize() {
-        var commandManager = MinecraftServer.getCommandManager();
+        final CommandManager commandManager = MinecraftServer.getCommandManager();
         debugCommand = new DebugCommand();
         commandManager.register(this.debugCommand);
         commandManager.register(new FlyCommand());
@@ -30,21 +28,6 @@ public class Felis extends Extension {
         commandManager.register(new SpeedCommand());
         commandManager.register(new StopCommand());
         commandManager.register(new TeleportCommand());
-
-        var instance = MinecraftServer.getInstanceManager().createInstanceContainer();
-        MinecraftServer.getInstanceManager().registerInstance(instance);
-
-        MinecraftServer.getGlobalEventHandler().addListener(
-                AsyncPlayerConfigurationEvent.class, playerLoginEvent -> playerLoginEvent.setSpawningInstance(instance)
-        );
-
-        var pos = new Pos(0, 100, 0);
-
-        instance.loadChunk(pos);
-
-        MinecraftServer.getGlobalEventHandler().addListener(
-                PlayerSpawnEvent.class, playerSpawnEvent ->
-                        playerSpawnEvent.getPlayer().teleport(pos));
     }
 
     @Override
