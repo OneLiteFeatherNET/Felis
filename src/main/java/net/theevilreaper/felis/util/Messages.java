@@ -22,10 +22,10 @@ public final class Messages {
     public static final Component ABORT_FLY_COMMAND =
             PREFIX.append(Component.text("Command can't be executed in CREATIVE mode", NamedTextColor.RED));
 
-    public static final Component NIGHTVISION_ENABLED =
-            PREFIX.append(Component.text("Enabled nightvision", NamedTextColor.AQUA));
-    public static final Component NIGHTVISION_DISABLED =
-            PREFIX.append(Component.text("Disabled nightvision", NamedTextColor.RED));
+    public static final Component NIGHT_VISION_ENABLED =
+            PREFIX.append(Component.text("Enabled night vision", NamedTextColor.AQUA));
+    public static final Component NIGHT_VISION_DISABLED =
+            PREFIX.append(Component.text("Disabled night vision", NamedTextColor.RED));
 
     public static final Component FLY_ENABLED =
             buildWithPrefix(Component.text("You can fly now"));

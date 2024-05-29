@@ -32,10 +32,10 @@ public class NightVisionCommand extends Command {
 
         if (!player.getActiveEffects().isEmpty()) {
             player.removeEffect(potion.effect());
-            player.sendMessage(Messages.NIGHTVISION_DISABLED);
+            player.sendMessage(Messages.NIGHT_VISION_DISABLED);
         } else {
             player.addEffect(potion);
-            player.sendMessage(Messages.NIGHTVISION_ENABLED);
+            player.sendMessage(Messages.NIGHT_VISION_ENABLED);
         }
     }
 }
