@@ -52,9 +52,9 @@ dependencyResolutionManagement {
     }
     versionCatalogs {
         create("libs") {
-            library("dungeon.base.bom", "net.theevilreaper.dungeon.bom", "base").version("1.0.0")
-            library("minestom", "net.onelitefeather.microtus", "Microtus").version("1.4.1")
-            library("minestom-test", "net.onelitefeather.microtus.testing", "testing").version("1.4.1")
+            library("dungeon.base.bom", "net.theevilreaper.dungeon.bom", "base").version("1.0.4")
+            library("minestom", "net.onelitefeather.microtus", "Microtus").withoutVersion()
+            library("minestom-test", "net.onelitefeather.microtus.testing", "testing").withoutVersion()
             library("adventure.minimessage", "net.kyori", "adventure-text-minimessage").withoutVersion()
             library("junit.api", "org.junit.jupiter", "junit-jupiter-api").withoutVersion()
             library("junit.engine", "org.junit.jupiter", "junit-jupiter-engine").withoutVersion()
