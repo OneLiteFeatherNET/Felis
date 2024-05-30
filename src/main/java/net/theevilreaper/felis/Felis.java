@@ -25,7 +25,6 @@ public class Felis extends Extension {
         commandManager.register(new KickCommand());
         commandManager.register(new KillCommand());
         commandManager.register(new NightVisionCommand());
-        commandManager.register(new SpeedCommand());
         commandManager.register(new StopCommand());
         commandManager.register(new TeleportCommand());
     }
