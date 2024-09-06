@@ -2,6 +2,7 @@ plugins {
     java
     jacoco
     alias(libs.plugins.publishdata)
+     `maven-publish`
 }
 
 group = "net.theevilreaper.felis"
@@ -48,6 +49,33 @@ tasks {
 
 publishData {
     addBuildData()
-    useGitlabReposForProject("", "")
+    useGitlabReposForProject("101", "https://gitlab.onelitefeather.dev/")
     publishTask("jar")
 }
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            // configure the publication as defined previously.
+           publishData.configurePublication(this)
+           version = publishData.getVersion(false)
+        }
+    }
+    repositories {
+        maven {
+            credentials(HttpHeaderCredentials::class) {
+                name = "Job-Token"
+                value = System.getenv("CI_JOB_TOKEN")
+            }
+            authentication {
+                create("header", HttpHeaderAuthentication::class)
+            }
+
+            name = "Gitlab"
+            // Get the detected repository from the publish data
+            url = uri(publishData.getRepository())
+        }
+    }
+
+}
+
