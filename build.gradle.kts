@@ -1,34 +1,16 @@
 plugins {
     java
     jacoco
+    alias(libs.plugins.publishdata)
 }
 
 group = "net.theevilreaper.felis"
-val baseVersion = "1.0.0-SNAPSHOT"
-val sonarKey = "insert-sonar-key"
+version = "1.0.0"
 
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(21))
     }
-}
-
-repositories {
-    mavenCentral()
-    maven("https://jitpack.io")
-    maven {
-        val groupdId = 28 // Gitlab Group
-        url = uri("https://gitlab.themeinerlp.dev/api/v4/groups/$groupdId/-/packages/maven")
-        name = "GitLab"
-        credentials(HttpHeaderCredentials::class.java) {
-            name =  "Private-Token"
-            value = providers.gradleProperty("gitLabPrivateToken").getOrElse("")
-        }
-        authentication {
-            create<HttpHeaderAuthentication>("header")
-        }
-    }
-
 }
 
 dependencies {
@@ -63,8 +45,9 @@ tasks {
     }
 }
 
-version = if (System.getenv().containsKey("CI")) {
-    "${baseVersion}+${System.getenv("CI_COMMIT_SHORT_SHA")}"
-} else {
-    baseVersion
+
+publishData {
+    addBuildData()
+    useGitlabReposForProject("", "")
+    publishTask("jar")
 }
