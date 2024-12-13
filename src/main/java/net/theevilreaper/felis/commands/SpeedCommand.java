@@ -1,13 +1,13 @@
 package net.theevilreaper.felis.commands;
 
 import net.kyori.adventure.text.Component;
-import net.minestom.server.attribute.VanillaAttribute;
 import net.minestom.server.command.CommandSender;
 import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.CommandContext;
 import net.minestom.server.command.builder.arguments.number.ArgumentFloat;
 import net.minestom.server.command.builder.condition.Conditions;
 import net.minestom.server.entity.Player;
+import net.minestom.server.entity.attribute.Attribute;
 import net.theevilreaper.felis.util.Messages;
 import org.jetbrains.annotations.NotNull;
 
@@ -86,7 +86,7 @@ public class SpeedCommand extends Command {
         if (player.isFlying()) {
             player.setFlyingSpeed(speedValue);
         } else {
-            player.getAttribute(VanillaAttribute.GENERIC_MOVEMENT_SPEED).setBaseValue(speedValue);
+            player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(speedValue);
         }
     }
 }
