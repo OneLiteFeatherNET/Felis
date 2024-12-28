@@ -51,6 +51,7 @@ dependencyResolutionManagement {
     versionCatalogs {
         create("libs") {
             version("publishdata", "1.4.0")
+
             library("dungeon.base.bom", "net.theevilreaper.dungeon.bom", "base").version("1.1.1")
             library("minestom", "net.onelitefeather.microtus", "Microtus").withoutVersion()
             library("minestom-test", "net.onelitefeather.microtus.testing", "testing").withoutVersion()
@@ -58,6 +59,7 @@ dependencyResolutionManagement {
             library("junit.engine", "org.junit.jupiter", "junit-jupiter-engine").withoutVersion()
             library("mockito.core", "org.mockito", "mockito-core").withoutVersion()
             library("mockito.junit", "org.mockito", "mockito-junit-jupiter").withoutVersion()
+
             plugin("publishdata", "de.chojo.publishdata").versionRef("publishdata")
         }
     }
