@@ -16,7 +16,9 @@ java {
 
 dependencies {
     implementation(platform(libs.dungeon.base.bom))
+
     compileOnly(libs.minestom)
+
     testImplementation(platform(libs.dungeon.base.bom))
     testImplementation(libs.minestom.test)
     testImplementation(libs.minestom)
@@ -76,6 +78,4 @@ publishing {
             url = uri(publishData.getRepository())
         }
     }
-
 }
-
