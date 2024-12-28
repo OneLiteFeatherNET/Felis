@@ -3,7 +3,6 @@ plugins {
     jacoco
     `maven-publish`
     alias(libs.plugins.publishdata)
-     `maven-publish`
 }
 
 group = "net.theevilreaper.felis"
