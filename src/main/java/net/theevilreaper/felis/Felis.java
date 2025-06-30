@@ -10,15 +10,10 @@ import net.theevilreaper.felis.commands.*;
  * @version 1.0.0
  * @since 1.0.0
  **/
-public class Felis extends Extension {
+public class Felis {
 
-    private DebugCommand debugCommand;
-
-    @Override
     public void initialize() {
         final CommandManager commandManager = MinecraftServer.getCommandManager();
-        debugCommand = new DebugCommand();
-        commandManager.register(this.debugCommand);
         commandManager.register(new FlyCommand());
         commandManager.register(new GameModeCommand());
         commandManager.register(new SpeedCommand());
@@ -29,8 +24,4 @@ public class Felis extends Extension {
         commandManager.register(new TeleportCommand());
     }
 
-    @Override
-    public void terminate() {
-        debugCommand.unregisterNode();
-    }
 }
