@@ -47,7 +47,7 @@ public class TeleportCommand extends Command {
             return;
         }
 
-        var target = targets.get(0);
+        var target = targets.getFirst();
 
         //Abort teleport to yourself
         if (player.getUuid().equals(target.getUuid())) {
@@ -55,7 +55,7 @@ public class TeleportCommand extends Command {
             return;
         }
 
-        if (!player.getInstance().getUniqueId().equals(target.getInstance().getUniqueId())) {
+        if (!player.getInstance().getUuid().equals(target.getInstance().getUuid())) {
             player.setInstance(target.getInstance(), target.getPosition());
         } else {
             player.teleport(target.getPosition());
