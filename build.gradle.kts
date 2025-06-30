@@ -2,7 +2,6 @@ plugins {
     java
     jacoco
     `maven-publish`
-    alias(libs.plugins.publishdata)
 }
 
 group = "net.theevilreaper.felis"
@@ -15,13 +14,13 @@ java {
 }
 
 dependencies {
-    implementation(platform(libs.dungeon.base.bom))
+    implementation(platform(libs.mycelium.bom))
 
     compileOnly(libs.minestom)
+    compileOnly(libs.adventure)
 
-    testImplementation(platform(libs.dungeon.base.bom))
-    testImplementation(libs.minestom.test)
     testImplementation(libs.minestom)
+    testImplementation(libs.cyano)
     testImplementation(libs.junit.api)
     testRuntimeOnly(libs.junit.engine)
 }
@@ -49,33 +48,11 @@ tasks {
 }
 
 
-publishData {
-    addBuildData()
-    useGitlabReposForProject("101", "https://gitlab.onelitefeather.dev/")
-    publishTask("jar")
-}
 
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            // configure the publication as defined previously.
-           publishData.configurePublication(this)
-           version = publishData.getVersion(false)
-        }
-    }
-    repositories {
-        maven {
-            credentials(HttpHeaderCredentials::class) {
-                name = "Job-Token"
-                value = System.getenv("CI_JOB_TOKEN")
-            }
-            authentication {
-                create("header", HttpHeaderAuthentication::class)
-            }
-
-            name = "Gitlab"
-            // Get the detected repository from the publish data
-            url = uri(publishData.getRepository())
+            from(components["java"])
         }
     }
 }
