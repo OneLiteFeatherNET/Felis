@@ -1,12 +1,6 @@
 rootProject.name = "felis"
 
 dependencyResolutionManagement {
-    pluginManagement {
-        repositories {
-            gradlePluginPortal()
-            maven("https://eldonexus.de/repository/maven-public/")
-        }
-    }
     repositories {
         mavenCentral()
         maven {
