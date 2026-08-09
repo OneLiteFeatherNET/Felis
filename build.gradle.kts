@@ -64,7 +64,6 @@ publishing {
     }
     publications {
         create<MavenPublication>("maven") {
-            artifact(project.tasks.getByName("shadowJar"))
             version = rootProject.version as String
             artifactId = "felis"
             groupId = rootProject.group as String
