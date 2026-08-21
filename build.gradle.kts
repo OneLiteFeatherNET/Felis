@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "net.theevilreaper.felis"
-version = "0.1.0"
+version = "0.0.0" // x-release-please-version
 
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(25))
 

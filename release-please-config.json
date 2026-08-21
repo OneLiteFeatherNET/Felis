@@ -6,7 +6,14 @@
   "packages": {
     ".": {
       "package-name": "Felis",
-      "changelog-path": "CHANGELOG.md"
+      "changelog-path": "CHANGELOG.md",
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "build.gradle.kts"
+        }
+      ]
     }
-  }
+  },
+  "bootstrap-sha": "6b7d2fda7a9e6667411eda149f37c1ee48dd9b6d"
 }
